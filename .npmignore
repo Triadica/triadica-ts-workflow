@@ -1,0 +1,17 @@
+
+node_modules
+
+yarn-error.log
+
+src/main.mts
+lib/main.mjs
+
+index.html
+
+tsconfig.json
+
+dist/
+.github
+vite.config.mjs
+entry.mts
+.prettierrc
