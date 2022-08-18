@@ -246,10 +246,10 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-triadica@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/triadica/-/triadica-0.0.3.tgz#54db1f1841e3db23c744cf25bba59e0abe606c6a"
-  integrity sha512-Faf9LWYehpjinbdMnezGNKOabcVCZxIvhXlxE6Y6pchtlwjGLa5IiPzlQccpotEDhF/9LrSGaYCYBtlDcdA/CQ==
+triadica@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/triadica/-/triadica-0.0.4.tgz#5d8a3d2f7ba5453f3ad719b2bca345dbca3628f7"
+  integrity sha512-ln3B5oxMnB97Ic9eLGDsB8rwj6qJVnw8CiHaPFvKrYp0u1KODXEtCNmhenISaOwP6XWrvry+fIpArUnaP3cZlg==
   dependencies:
     "@quamolit/touch-control" "^0.0.11"
     immer "^9.0.15"
