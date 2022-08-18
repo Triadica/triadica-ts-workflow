@@ -7,8 +7,31 @@ import fs from "../../shaders/lines.frag";
 
 export let atomDirtyUniforms = new Atom({});
 
+let range = (n: number): number[] => {
+  let ret = [];
+  for (let idx = 0; idx < n; idx++) {
+    ret.push(idx);
+  }
+  return ret;
+};
+
 export let compContainer = (store: any) => {
-  return group({}, compAxis());
+  return group(
+    {},
+    compAxis(),
+    object({
+      drawMode: "lines",
+      vertexShader: vs,
+      fragmentShader: fs,
+      packedAttrs: range(1000).map((i) => {
+        let angle = i * 0.01;
+        let r = i * 0.4 + 10;
+        return {
+          position: [r * Math.cos(angle), r * Math.sin(angle), 0],
+        };
+      }),
+    })
+  );
 };
 
 let compAxis = (): TriadicaObjectData => {
