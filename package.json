@@ -16,6 +16,6 @@
     "vite-plugin-glsl": "^0.3.0"
   },
   "dependencies": {
-    "triadica": "^0.0.1-a2"
+    "triadica": "^0.0.1"
   }
 }
