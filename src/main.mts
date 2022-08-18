@@ -8,6 +8,7 @@ import { atomGlContext } from "triadica/lib/global.mjs";
 import { loadObjects, onControlEvent, paintCanvas, resetCanvasSize, setupMouseEvents } from "triadica/lib/index.mjs";
 import { atomDirtyUniforms, compContainer } from "./app/container.mjs";
 import { renderControl, replaceControlLoop, startControlLoop } from "triadica/lib/touch-control.mjs";
+import { resetMemof1Caches } from "triadica/lib/memof1.mjs";
 
 let canvas = document.querySelector("canvas");
 
@@ -44,6 +45,7 @@ export let main = () => {
     paintCanvas();
   };
   setupMouseEvents(canvas);
+  console.log("app loaded");
 };
 
 let renderApp = () => {
@@ -74,7 +76,8 @@ let dispatch = (op: string, data: any) => {
 };
 
 export let reload = () => {
-  // TODO reset-memof1-caches
+  resetMemof1Caches();
+  renderApp();
   atomStore.removeWatch("change");
   atomStore.addWatch("change", (prev, store) => {
     renderApp();
