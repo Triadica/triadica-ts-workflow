@@ -1,11 +1,13 @@
-import { isDev } from "triadica/lib/config.mjs";
-import { Atom } from "triadica/lib/data.mjs";
-import { atomGlContext } from "triadica/lib/global.mjs";
-import { loadObjects, onControlEvent, paintCanvas, resetCanvasSize, setupMouseEvents } from "triadica/lib/index.mjs";
 import * as twgl from "twgl.js";
 import produce from "immer";
+
+import { isDev } from "triadica/lib/config.mjs";
+import { Atom } from "triadica/lib/atom.mjs";
+import { updateStates } from "triadica/lib/cursor.mjs";
+import { atomGlContext } from "triadica/lib/global.mjs";
+import { loadObjects, onControlEvent, paintCanvas, resetCanvasSize, setupMouseEvents } from "triadica/lib/index.mjs";
 import { atomDirtyUniforms, compContainer } from "./app/container.mjs";
-import { renderControl, replaceControlLoop, startControlLoop } from "triadica/lib/touch-control";
+import { renderControl, replaceControlLoop, startControlLoop } from "triadica/lib/touch-control.mjs";
 
 let canvas = document.querySelector("canvas");
 
@@ -54,40 +56,21 @@ let dispatch = (op: string, data: any) => {
     console.log(op, data);
   }
 
-  if (op === "city-spin") {
-    // TODO
-  } else {
-    let store = atomStore.deref();
-    let next = Array.isArray(op)
-      ? updateStates(store, [op, data])
-      : (() => {
-          switch (op) {
-            case "tab-focus":
-              return { tab: data, ...store };
-            default:
-              return null;
-          }
-        })();
+  let store = atomStore.deref();
+  let next = Array.isArray(op)
+    ? updateStates(store, [op, data])
+    : (() => {
+        switch (op) {
+          case "tab-focus":
+            return produce(store, (s) => {
+              store.tab = data;
+            });
+          default:
+            return store;
+        }
+      })();
 
-    if (next != null) {
-      atomStore.reset(next as any); // TODO type for store
-    }
-  }
-};
-
-let updateStates = (store: any, pair: [string[], any]) => {
-  let [cursor, newState] = pair;
-
-  produce(store, (s: any) => {
-    let state = s.states;
-    for (let i = 0; i < cursor.length; i++) {
-      if (state[cursor[i]] == null) {
-        state[cursor[i]] = { data: {} };
-      }
-      state = state[cursor[i]];
-    }
-    state.data = newState;
-  });
+  atomStore.reset(next);
 };
 
 export let reload = () => {
@@ -96,7 +79,6 @@ export let reload = () => {
   atomStore.addWatch("change", (prev, store) => {
     renderApp();
   });
-  // TODO replace-control-loop
   replaceControlLoop(10, onControlEvent);
   setupMouseEvents(canvas);
   window.onresize = (event) => {

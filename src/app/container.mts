@@ -1,5 +1,6 @@
-import { group, object, TriadicaObjectData } from "triadica/lib/alias.mjs";
-import { Atom } from "triadica/lib/data.mjs";
+import { TriadicaObjectData } from "triadica/lib/primes.mjs";
+import { group, object } from "triadica/lib/alias.mjs";
+import { Atom } from "triadica/lib/atom.mjs";
 
 import vs from "../../shaders/lines.vert";
 import fs from "../../shaders/lines.frag";
