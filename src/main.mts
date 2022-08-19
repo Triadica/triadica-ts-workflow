@@ -4,9 +4,9 @@ import produce from "immer";
 import { isDev } from "triadica/lib/config.mjs";
 import { Atom } from "triadica/lib/atom.mjs";
 import { updateStates } from "triadica/lib/cursor.mjs";
-import { atomGlContext } from "triadica/lib/global.mjs";
+import { atomGlContext, atomDirtyUniforms } from "triadica/lib/global.mjs";
 import { loadObjects, onControlEvent, paintCanvas, resetCanvasSize, setupMouseEvents } from "triadica/lib/index.mjs";
-import { atomDirtyUniforms, compContainer } from "./app/container.mjs";
+import { compContainer } from "./app/container.mjs";
 import { renderControl, replaceControlLoop, startControlLoop } from "triadica/lib/touch-control.mjs";
 import { resetMemof1Caches } from "triadica/lib/memof1.mjs";
 
@@ -59,18 +59,18 @@ let dispatch = (op: string, data: any) => {
   }
 
   let store = atomStore.deref();
-  let next = Array.isArray(op)
-    ? updateStates(store, [op, data])
-    : (() => {
-        switch (op) {
-          case "tab-focus":
-            return produce(store, (s) => {
-              store.tab = data;
-            });
-          default:
-            return store;
-        }
-      })();
+  let next = (() => {
+    switch (op) {
+      case "states":
+        return updateStates(store, data);
+      case "tab-focus":
+        return produce(store, (s) => {
+          store.tab = data;
+        });
+      default:
+        return store;
+    }
+  })();
 
   atomStore.reset(next);
 };

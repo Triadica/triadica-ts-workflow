@@ -1,19 +1,9 @@
-import { TriadicaObjectData } from "triadica/lib/primes.mjs";
 import { group, object } from "triadica/lib/alias.mjs";
-import { Atom } from "triadica/lib/atom.mjs";
+import { compAxis } from "triadica/lib/comp/axis.mjs";
+import { range } from "triadica/lib/math.mjs";
 
 import vs from "../../shaders/lines.vert";
 import fs from "../../shaders/lines.frag";
-
-export let atomDirtyUniforms = new Atom({});
-
-let range = (n: number): number[] => {
-  let ret = [];
-  for (let idx = 0; idx < n; idx++) {
-    ret.push(idx);
-  }
-  return ret;
-};
 
 export let compContainer = (store: any) => {
   return group(
@@ -32,20 +22,4 @@ export let compContainer = (store: any) => {
       }),
     })
   );
-};
-
-let compAxis = (): TriadicaObjectData => {
-  return object({
-    vertexShader: vs,
-    fragmentShader: fs,
-    drawMode: "lines",
-    points: [
-      [-400, 0, 0],
-      [400, 0, 0],
-      [0, 400, 0],
-      [0, -400, 0],
-      [0, 0, -400],
-      [0, 0, 400],
-    ],
-  });
 };
